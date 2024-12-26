@@ -1,0 +1,40 @@
+################## Build #################################
+
+
+
+
+
+###############Docker compose ############################
+
+To run the docker-compose.yaml file
+
+> docker-compose up -d
+
+To create a docker network
+
+>docker network create kafka-network
+
+
+To create Kafka Topic
+
+>docker exec -it kafka kafka-topics --create --topic test-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4
+
+
+To view the kafka topics
+
+>docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092
+
+To Publish message
+
+>docker exec -it kafka kafka-console-producer --broker-list localhost:9092 --topic test-topic
+>add your message here
+>
+
+after adding message press Ctrl+c to send
+
+
+To consume message
+
+>docker exec -it kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --from-beginning
+
+after consuming message press Ctrl+c to stop
