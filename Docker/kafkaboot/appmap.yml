@@ -1,0 +1,5 @@
+language: "java"
+name: "kafkaboot"
+appmap_dir: "tmp/appmap"
+packages:
+- path: "com.javasurfer.kafkaboot"
