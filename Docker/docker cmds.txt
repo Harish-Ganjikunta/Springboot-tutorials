@@ -1,5 +1,16 @@
 ################## Build #################################
 
+To build docker image
+
+>docker build -t kafkaboot:latest .
+
+To view docker images
+
+>docker images
+
+To run docker images
+
+>docker run -it kafkaboot
 
 
 
@@ -23,6 +34,10 @@ To create Kafka Topic
 To view the kafka topics
 
 >docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092
+
+Verifying Running Containers
+
+>docker container list
 
 To Publish message
 
