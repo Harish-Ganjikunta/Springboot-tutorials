@@ -9,7 +9,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>consumer</artifactId>
+
+    <artifactId>commonlib</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -17,14 +19,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-   <!-- <dependencies>
-        <dependency>
-            <groupId>com.javasurfer</groupId>
-            <artifactId>commonlib</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>-->
     <build>
-        <finalName>consumer-app</finalName>
+        <finalName>commonlib</finalName>
     </build>
+
 </project>

@@ -17,4 +17,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!--<dependencies>
+        <dependency>
+            <groupId>com.javasurfer</groupId>
+            <artifactId>commonlib</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>-->
+    <build>
+        <finalName>producer-app</finalName>
+    </build>
 </project>

@@ -1,5 +1,6 @@
 package com.javasurfer.service;
 
+import com.javasurfer.dto.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -25,7 +26,18 @@ public class KafkaProducerService {
         } else {
             System.out.println("Error sending message=["+message+"] with exception=["+ex.getMessage()+"]");
         }
+    });
     }
-    );
+
+    public void sendEventsToTopic(Person person) {
+        CompletableFuture<SendResult<String,Object>> future = kafkaTemplate.send(TOPIC, person);
+
+        future.whenComplete((result, ex) -> {
+            if (ex == null) {
+                System.out.println("Message sent =["+person.toString()+ "]with OffSet =["+result.getRecordMetadata().offset()+"] successfully");
+            } else {
+                System.out.println("Error sending message=["+person.toString()+"] with exception=["+ex.getMessage()+"]");
+            }
+        });
     }
 }
