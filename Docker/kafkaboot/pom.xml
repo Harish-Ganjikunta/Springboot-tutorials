@@ -11,7 +11,8 @@
 	<groupId>com.javasurfer</groupId>
 	<artifactId>kafkaboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kafkaboot</name>
+    <packaging>pom</packaging>
+    <name>kafkaboot</name>
 	<description>Demo project for Spring Boot and Kafka</description>
 	<url/>
 	<licenses>
@@ -20,7 +21,11 @@
 	<developers>
 		<developer/>
 	</developers>
-	<scm>
+    <modules>
+        <module>producer</module>
+		<module>consumer</module>
+	</modules>
+    <scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
