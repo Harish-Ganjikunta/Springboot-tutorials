@@ -21,6 +21,11 @@ public class OnlineMobilesService {
         );
     }
 
+    public List<MobilesDto> saveMobileDetails(List<MobilesDto> mobiles) {
+       List<MobilesDto> existingMobiles = getMobileDetails();
+       existingMobiles.addAll(mobiles);
+        return existingMobiles;
+    }
     public List<MobilesDto> getOnlineMobiles() {
         return onlineMobilesClient.getMobileDetails();
     }

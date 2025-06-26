@@ -1,6 +1,10 @@
 package com.hari.cloud.dto;
 
+import org.springframework.data.annotation.Id;
+
 public class MobilesDto {
+
+    private long id;
     private String brand;
     private String model;
     private String color;
@@ -14,6 +18,14 @@ public class MobilesDto {
         this.model = model;
         this.color = color;
         this.price = price;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getBrand() {
