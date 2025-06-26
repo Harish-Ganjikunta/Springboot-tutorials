@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.javasurfer</groupId>
-	<artifactId>java17</artifactId>
+	<artifactId>javafeatures</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>java17</name>
-	<description>Practice java17 features</description>
+	<name>javafeatures</name>
+	<description>Practice java features</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -47,6 +47,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>21</source>
+					<target>21</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
