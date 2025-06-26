@@ -1,9 +1,39 @@
 package com.hari.cloud.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Setter
+@Getter
+@Document(collection = "mobiles")
 public class MobilesDto {
+    @Id
+    private long id;
+
+
+    @NotNull
+    @Size(min = 2, max = 50, message = "Brand name must be between 2 and 50 characters")
+    @Indexed(unique = true)
     private String brand;
+
+    @NotNull
+    @Size(min = 2, max = 50, message = "Model name must be between 2 and 50 characters")
+    @Indexed(unique = true)
     private String model;
+
+    @NotNull
+    @Size(min = 2, max = 20, message = "Color must be between 2 and 20 characters")
+    @Indexed(unique = true)
     private String color;
+
+    @NotNull
+    @Size(min = 1, message = "Price must be greater than 0")
+    @Indexed(unique = true)
     private double price;
 
     public MobilesDto() {
@@ -16,35 +46,4 @@ public class MobilesDto {
         this.price = price;
     }
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 }
