@@ -2,11 +2,12 @@ package com.javasurfer.java.features.java8.interview;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class IntergersTest {
-
+    private static  final List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1,1,1,1,4,3,3,5,7,8);
+    private static final int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1,1,1,1,4,3,3,5,7,8};
 
     public static void findEvenNumbers() {
 
@@ -29,56 +30,9 @@ public class IntergersTest {
     }
 
 
-    public static void removeDuplicates() {
-        List<String> words = List.of("Apple", "Banana", "Apple", "Mango", "Banana", "Orange", "Kiwi", "Plum", "DragonFruit", "Kiwi");
-
-        /** Remove duplicates from the list of words
-         *
-         * Using distinct method
-         */
-        List<String> unique = words.stream().distinct().collect((Collectors.toList()));
-        System.out.println("Unique Words Using distinct method: " + unique);
-
-        /** Remove duplicates from the list of words
-         *
-         * Using Collectors.toSet()
-         */
-        Set<String> uniques = words.stream().collect(Collectors.toSet());
-        System.out.println("Unique Words Using Collectors.toSet() method: " + uniques);
-
-    }
 
 
-    public static void findFrequencyOfChars() {
-        String value = "Hello JavaSurfer how are you doing today";
 
-        /** Frequency Of characters in a String
-         *
-         * Using Collectors.groupingBy
-         */
-        Map<Character, Long> frequency = value.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        System.out.println("Frequency of Characters: " + frequency);
-    }
-    public static void findFrequencyOfElementsOrWords() {
-
-        List<String> words = List.of("Apple", "Banana", "Apple", "Mango", "Banana", "Orange", "Kiwi", "Plum", "DragonFruit", "Kiwi");
-
-        /** Frequency Of words in a List
-         *
-         * Using Collectors.groupingBy
-         */
-        Map<String,Long> frequencies = words.stream().collect(Collectors.groupingBy((Function.identity()),Collectors.counting()));
-        System.out.println("Frequency of Words: " + frequencies);
-
-
-        /** Sorting the words in reverse order
-         *
-         * Using sorted method
-         */
-        List<String> sortedList =words.stream().sorted(Comparator.reverseOrder()).toList();
-        System.out.println("Sorted List in reverse order: " + sortedList);
-
-    }
 
     public static void findFrequencyOfIntegers() {
 
@@ -123,13 +77,94 @@ public class IntergersTest {
     }
 
 
+    /**
+     * Merge two arrays and sort them
+     *
+     * Using IntStream::concat, distinct and sorted methods
+     */
+    public static void mergeArrays(){
+        int[] arr1 = {1, 2, 3, 4, 5};
+        int[] arr2 = {4,5, 6,7, 8, 9, 10};
+
+        int[] mergedArray = IntStream.concat(Arrays.stream(arr1),Arrays.stream(arr2)).distinct().sorted().toArray();
+        System.out.println(" Using IntStream:: Merged and Sorted Array: " + Arrays.toString(mergedArray));
+
+        List<Integer> mergedArrayToList = IntStream.concat(Arrays.stream(arr1),Arrays.stream(arr2)).distinct().sorted().boxed().toList();
+
+        System.out.println(" Using IntStream:: Merged and Sorted Array to List: " + mergedArrayToList);
+    }
+
+    /**
+     * Find the smallest values in an array
+     *
+     * Using IntStream::sorted and limit methods
+     */
+    public static void findSmallestValues(){
+        int[] arr = { 9, 10,50, 60, 70, 80, 90, 1001, 2,2, 3, 4, 5, 6, 7, 8,};
+
+        // Find the smallest 4 values in the array
+        int[] smallest4Values = IntStream.of(arr).distinct().sorted().limit(4).toArray();
+        System.out.println("Smallest 4 values in the array: " + Arrays.toString(smallest4Values));
+
+        // Find the smallest 4 values in the array and convert to List
+        List<Integer> smallest4ValuesList = IntStream.of(arr).distinct().sorted().limit(4).boxed().toList();
+        System.out.println("Smallest 4 values in the array as List: " + smallest4ValuesList);
+
+        List<String> smallest4ValuesListAsString = IntStream.of(arr).distinct().sorted().limit(4).mapToObj(String::valueOf).toList();
+        System.out.println("Smallest 4 values in the array as List of Strings: " + smallest4ValuesListAsString);
+
+    }
+
+
+    public static void findLargestValues() {
+        int[] arr = {9, 10, 50, 60, 70, 80, 90, 1001, 2, 2, 3, 4, 5, 6, 7, 8,};
+
+        List<Integer> numbers = List.of(9, 10, 50, 60, 70, 80, 90, 1001, 2, 2, 3, 4, 5, 6, 7, 8);
+
+        // Find the largest 4 values in the array using skip
+        int[] largest4Values = IntStream.of(arr).distinct().sorted().skip(arr.length - 4).toArray();
+        System.out.println("Largest 4 values in the array: " + Arrays.toString(largest4Values));
+
+        // Find the largest 4 values in the array and convert to List using skip
+        List<Integer> largest4ValuesList = IntStream.of(arr).distinct().sorted().skip(arr.length - 5).boxed().toList();
+        System.out.println("Largest 4 values in the array as List: " + largest4ValuesList);
+
+        //convert the largest 4 values to List of integers to int[]
+        int[] largest4ValuesArray = numbers.stream().distinct().sorted(Comparator.reverseOrder()).limit(4).mapToInt(Integer::intValue).toArray();
+        System.out.println("Largest 4 values in the List as Array: " + Arrays.toString(largest4ValuesArray));
+    }
+
+    public static void findFistNonRepeatedValue(){
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1,1,1,1,4,3,3,5,7,8);
+        int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1,1,1,1,4,3,3,5,7,8};
+
+        // Find the first non-repeated value in the List
+        Integer firstNonRepeatedValue = numbers.stream().collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting())).entrySet().stream().filter(entry -> entry.getValue() == 1L).map(Map.Entry::getKey).findFirst().orElse(-1);
+        System.out.println("First Non-Repeated Value in List: " + firstNonRepeatedValue);
+
+        // Find the first non-repeated value in the Array method 1
+        Integer firstNonRepeatedArrayValue = Arrays.stream(nums).boxed().collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting())).entrySet().stream().filter(entry -> entry.getValue() == 1L).map(Map.Entry::getKey).findFirst().orElse(-1);
+        System.out.println("First Non-Repeated Value in Array using boxed method 1: " + firstNonRepeatedArrayValue);
+
+        Integer firstNonRepeatedArrayValue1 = IntStream.of(nums).boxed().collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting())).entrySet().stream().filter(entry->entry.getValue()==1L).map(Map.Entry::getKey).findFirst().orElse(-1);
+        System.out.println("First Non-Repeated Value in Array using boxed method 2:"+firstNonRepeatedArrayValue1);
+    }
+
+
+    public static void printReverseOfArray(){
+        int[] reverseArray = IntStream.rangeClosed(1,nums.length).map(i ->nums[nums.length-i]).toArray();
+        System.out.println("Original Array: " + Arrays.toString(nums));
+        System.out.println("Reverse of Array: " + Arrays.toString(reverseArray));
+    }
 
     public static void main(String[] args) {
         //findEvenNumbers();
-        //removeDuplicates();
-        // findFrequencyOfChars();
-        findFrequencyOfElementsOrWords();
-        findFrequencyOfIntegers();
+        //findFrequencyOfIntegers();
+        //mergeArrays();
+        //findSmallestValues();
+       // findLargestValues();
+        //findFistNonRepeatedValue();
+        printReverseOfArray();
     }
 
 
