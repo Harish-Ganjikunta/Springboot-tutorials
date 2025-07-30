@@ -1,4 +1,4 @@
-package com.javasurfer.java17;
+package com.javasurfer.java;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

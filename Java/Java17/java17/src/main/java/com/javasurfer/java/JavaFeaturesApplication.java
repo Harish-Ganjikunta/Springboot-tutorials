@@ -1,13 +1,13 @@
-package com.javasurfer.java17;
+package com.javasurfer.java;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Java17Application {
+public class JavaFeaturesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Java17Application.class, args);
+		SpringApplication.run(JavaFeaturesApplication.class, args);
 	}
 
 }
