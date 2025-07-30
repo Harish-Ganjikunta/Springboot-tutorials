@@ -9,6 +9,40 @@ public class StringsAndCharsTest {
     private static final List<String>  words= List.of("Apple", "Banana", "Apple", "Mango", "Banana", "Orange", "Kiwi", "Plum", "DragonFruit", "Kiwi");
 
     private static final String value = "Hello JavaSurfer how are you doing today";
+
+    public static void main(String[] args) {
+        //removeDuplicates();
+        //findFrequencyOfChars();
+        //findFrequencyOfElementsOrWords();
+        //findFirstNonRepeatingCharacter();
+        //highestRepeatedWords();
+        //reverseStringUsingStreams();
+        sortTheWordsBasedOnLength();
+    }
+
+    /**
+     * Sort the words based on their length in ascending and descending order
+     * This method demonstrates sorting using Streams with different criteria.
+     */
+    public static void sortTheWordsBasedOnLength() {
+        List<String> sortedWordsInAsc = words.stream().sorted(Comparator.comparing(String::length)).toList();
+        System.out.println("Sorted  Words in ASC Based on Length: " + sortedWordsInAsc);
+
+        List<String> sortedWordsInDesc = words.stream().sorted(Comparator.comparing(String::length).reversed()).toList();
+        System.out.println("Sorted  Words in DESC Based on Length: " + sortedWordsInDesc);
+
+        List<String> sortedWordsInAscByLengthAndAlphabetically = words.stream()
+                .sorted(Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()))
+                .toList();
+        System.out.println("Sorted  Words in ASC Based on Length and Alphabetically: " + sortedWordsInAscByLengthAndAlphabetically);
+
+        List<String> sortedWordsInDescByLengthAndAlphabetically = words.stream().sorted(Comparator.comparing(String::length).reversed().thenComparing(Comparator.naturalOrder())).toList();
+        System.out.println("Sorted  Words in DESC Based on Length and Alphabetically: " + sortedWordsInDescByLengthAndAlphabetically);
+    }
+    /**
+     * Remove duplicates from a list of words
+     * This method demonstrates two ways to remove duplicates using Streams.
+     */
     public static void removeDuplicates() {
        // List<String> words = List.of("Apple", "Banana", "Apple", "Mango", "Banana", "Orange", "Kiwi", "Plum", "DragonFruit", "Kiwi");
 
@@ -26,8 +60,17 @@ public class StringsAndCharsTest {
         Set<String> uniques = words.stream().collect(Collectors.toSet());
         System.out.println("Unique Words Using Collectors.toSet() method: " + uniques);
 
+        Set<String> uniques1 = new HashSet<>(words);
+        System.out.println("Unique Words Using HashSet: " + uniques1);
+
+        Set<String> uniques2 = new LinkedHashSet<>(words);
+        System.out.println("Unique Words Using LinkedHashSet: " + uniques2);
     }
 
+    /**
+     * Find the frequency of characters in a string
+     * This method uses Collectors.groupingBy to count occurrences of each character.
+     */
     public static void findFrequencyOfChars() {
         String value = "Hello JavaSurfer how are you doing today";
 
@@ -46,6 +89,10 @@ public class StringsAndCharsTest {
         System.out.println("Frequency of Characters after removing spaces and converting to lower case: " + frequency2);
     }
 
+    /**
+     * Find the frequency of elements or words in a list
+     * This method uses Collectors.groupingBy to count occurrences of each word.
+     */
     public static void findFrequencyOfElementsOrWords() {
 
         //List<String> words = List.of("Apple", "Banana", "Apple", "Mango", "Banana", "Orange", "Kiwi", "Plum", "DragonFruit", "Kiwi");
@@ -93,6 +140,10 @@ public class StringsAndCharsTest {
         System.out.println("First Non-Repeating Character using alternative method: " + nonRepetedChar);
     }
 
+    /**
+     * Find the highest repeated word in a string
+     * This method uses two different approaches to find the most repeated word.
+     */
     public static void highestRepeatedWords(){
         String value = "Hello JavaSurfer how how are you doing today are you good today good good good good how how how how how how how";
 
@@ -107,14 +158,18 @@ public class StringsAndCharsTest {
         //.max(Comparator.naturalOrder()).
     }
 
-
-    public static void main(String[] args) {
-        //removeDuplicates();
-        //findFrequencyOfChars();
-        //findFrequencyOfElementsOrWords();
-        //findFirstNonRepeatingCharacter();
-        highestRepeatedWords();
+    /**
+     * Reverse the words in a string using Streams
+     * This method reverses the entire string, not just the order of words.
+     */
+    public static void reverseStringUsingStreams() {
+        String str = "Hello How are you doing today";
+        String reversed = str.chars().mapToObj(c -> (char) c)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+                    Collections.reverse(list);
+                    return list.stream().map(String::valueOf).collect(Collectors.joining());
+                }));
+        System.out.println("Reversed Words in String: " + reversed);
     }
-
 
 }
