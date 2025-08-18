@@ -31,6 +31,24 @@ public class QvantelInterview {
         System.out.println("Array after removing duplicates: " + uniqueValues);
 
     }
+
+    /**
+     * Print pairs of two integer lists
+     * <p>
+     * Using flatMap and map methods
+     * O/P [[1, 3], [1, 4], [2, 3], [2, 4]]
+     */
+    public static void printPairsOfTwoIntegerLists() {
+        List<Integer> list1 = List.of(1, 2, 3);
+        List<Integer> list2 = List.of(4, 5);
+
+        List<List<Integer>> pairs = list1.stream()
+                .flatMap(i -> list2.stream().map(j -> List.of(i, j)))
+                .toList();
+
+        System.out.println(pairs); // Output: [[1, 3], [1, 4], [2, 3], [2, 4]]
+    }
+
     class A {
         int i = 10;
         int j = 20;

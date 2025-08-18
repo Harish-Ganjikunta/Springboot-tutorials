@@ -19,9 +19,72 @@ public class IntergersTest {
         //findFistNonRepeatedValue();
         //printReverseOfArray();
         //removeDuplicatesFromListOfList();
-        findMinAndMaxNumInList();
+        //findMinAndMaxNumInList();
+        printPairsOfIntegers();
+        //printPairsOfTwoIntegerLists();
+    }
+    /**
+     * Remove duplicates from a List of Lists
+     * <p>
+     * Using flatMap and distinct methods
+     */
+    public static void removeDuplicatesFromListOfList() {
+        List<List<Integer>> listOfIntegers = new ArrayList<>();
+        listOfIntegers.add(Arrays.asList(1, 2, 3));
+        listOfIntegers.add(Arrays.asList(3, 2, 5));
+        listOfIntegers.add(Arrays.asList(4, 5, 6, 7));
+
+        // Remove duplicates from the array using distinct
+        List<Integer> uniqueValues = listOfIntegers.stream().flatMap(List::stream)
+                .distinct().toList();
+        //.collect(Collectors.toList());
+        System.out.println("Array after removing duplicates: " + uniqueValues);
+
+        List<Integer> uniqueValues1 = listOfIntegers.stream().flatMap(l -> l.stream()).distinct().toList();//collect(Collectors.toList());
+        System.out.println("Array after removing duplicates: " + uniqueValues1);
     }
 
+    /**
+     * Print pairs of integers from a List of integers
+     * <p>
+     * Using flatMap and map methods
+     * O/P [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5)]
+     */
+    public static void printPairsOfIntegers() {
+        List<Integer> integers = List.of(1, 2, 3, 4, 5);
+        List<String> pairs = integers.stream()
+                .flatMap(i -> integers.stream().map(j -> "(" + i + ", " + j + ")"))
+                .toList();
+        System.out.println("Pairs of Integers using String Concat: " + pairs);
+
+        List<List<Integer>> intPairs =  integers.stream().flatMap(i -> integers.stream().map(j ->List.of(i,j))).toList();
+        System.out.println("Pairs of Integers using List: " + intPairs);
+    }
+
+    /**
+     * Print pairs of two integer lists
+     * <p>
+     * Using flatMap and map methods
+     * O/P [[1, 3], [1, 4], [2, 3], [2, 4]]
+     */
+    public static void printPairsOfTwoIntegerLists() {
+        List<Integer> list1 = List.of(1, 2, 3);
+        List<Integer> list2 = List.of(4, 5);
+
+        List<List<Integer>> pairs = list1.stream()
+                .flatMap(i -> list2.stream().map(j -> List.of(i, j)))
+                .toList();
+
+        System.out.println(pairs); // Output: [[1, 3], [1, 4], [2, 3], [2, 4]]
+    }
+
+
+
+    /**
+     * Find the minimum and maximum numbers in a List of integers
+     * <p>
+     * Using Stream API methods like min, max, reduce, collect, sorted, etc.
+     */
     public static void findMinAndMaxNumInList(){
         System.out.println("List of numbers: " + numbers);
         numbers.stream().min(Integer::compareTo).ifPresent(min -> System.out.println("Method1 :: using min() Minimum number in the list: " + min));
@@ -217,24 +280,5 @@ public class IntergersTest {
         System.out.println("Reverse of Array using IntStream as List: " + reverseArrList);
     }
 
-    /**
-     * Remove duplicates from a List of Lists
-     * <p>
-     * Using flatMap and distinct methods
-     */
-    public static void removeDuplicatesFromListOfList() {
-        List<List<Integer>> listOfIntegers = new ArrayList<>();
-        listOfIntegers.add(Arrays.asList(1, 2, 3));
-        listOfIntegers.add(Arrays.asList(3, 2, 5));
-        listOfIntegers.add(Arrays.asList(4, 5, 6, 7));
 
-        // Remove duplicates from the array using distinct
-        List<Integer> uniqueValues = listOfIntegers.stream().flatMap(List::stream)
-                .distinct().toList();
-        //.collect(Collectors.toList());
-        System.out.println("Array after removing duplicates: " + uniqueValues);
-
-        List<Integer> uniqueValues1 = listOfIntegers.stream().flatMap(l -> l.stream()).distinct().toList();//collect(Collectors.toList());
-        System.out.println("Array after removing duplicates: " + uniqueValues1);
-    }
 }
