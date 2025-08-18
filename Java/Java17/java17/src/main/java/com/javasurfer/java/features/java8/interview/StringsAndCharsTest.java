@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class StringsAndCharsTest {
 
     private static final List<String>  words= List.of("Apple", "Banana", "Apple", "Mango", "Banana", "Orange", "Kiwi", "Plum", "DragonFruit", "Kiwi");
+    private static final Set<String>  set= Set.of( "Apple", "Mango", "Banana", "Orange", "Plum", "DragonFruit", "Kiwi");
 
     private static final String value = "Hello JavaSurfer how are you doing today";
 
@@ -16,9 +17,22 @@ public class StringsAndCharsTest {
         //findFrequencyOfElementsOrWords();
         //findFirstNonRepeatingCharacter();
         //highestRepeatedWords();
-        //reverseStringUsingStreams();
-        sortTheWordsBasedOnLength();
+        reverseStringUsingStreams();
+        //sortTheWordsBasedOnLength();
+        //printOccurenceOfCharsUsingSet();
+        firstRepeatedChar();
     }
+
+    /**
+     * Print the occurrence of characters in a string using Set
+     * This method collects characters into a Map with their counts.
+     */
+    public static void printOccurenceOfCharsUsingSet(){
+       Map<String,Long> occurenceOfChars = set.stream()
+                .collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new, Collectors.counting()));
+        System.out.println("Occurrence of Characters using Set: " + occurenceOfChars);
+    }
+
 
     /**
      * Sort the words based on their length in ascending and descending order
@@ -141,6 +155,14 @@ public class StringsAndCharsTest {
     }
 
     /**
+     * First repeated Character
+     */
+    public static void firstRepeatedChar(){
+        Character repeatedCharacter =  value.chars().mapToObj(c-> (char) c).collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting())).entrySet().stream().filter(entry ->entry.getValue()>1L).map(Map.Entry::getKey).findFirst().orElse('0');
+        System.out.println("First Repeated Character:: "+repeatedCharacter);
+    }
+
+    /**
      * Find the highest repeated word in a string
      * This method uses two different approaches to find the most repeated word.
      */
@@ -170,6 +192,12 @@ public class StringsAndCharsTest {
                     return list.stream().map(String::valueOf).collect(Collectors.joining());
                 }));
         System.out.println("Reversed Words in String: " + reversed);
+
+        String reversedWords = Arrays.stream(str.split(" "))
+                .map(word -> new StringBuilder(word).reverse().toString())
+                .collect(Collectors.joining(" "));
+        System.out.println("Reveserd Words in Str method1: "+reversedWords);
+
     }
 
 }

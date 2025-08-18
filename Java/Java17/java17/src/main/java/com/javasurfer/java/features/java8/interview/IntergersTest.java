@@ -95,7 +95,10 @@ public class IntergersTest {
          * Using Collectors.groupingBy
          */
         Map<Integer, Long> frequency = Arrays.stream(nums).mapToObj(i -> (Integer) i).collect(Collectors.groupingBy((Function.identity()), Collectors.counting()));
-        System.out.println("Frequency of numbers using Array: " + frequencies);
+
+        Map<Integer, Long> frequency1 = Arrays.stream(nums).boxed().collect(Collectors.groupingBy((Function.identity()), Collectors.counting()));
+        System.out.println("Frequency of numbers using Array: " + frequency);
+        System.out.println("Frequency of numbers using Array with boxed: " + frequency1);
         /** Sorting the List of numbers in reverse order
          *
          * Using sorted method
@@ -127,7 +130,9 @@ public class IntergersTest {
         int[] arr2 = {4, 5, 6, 7, 8, 9, 10};
 
         int[] mergedArray = IntStream.concat(Arrays.stream(arr1), Arrays.stream(arr2)).distinct().sorted().toArray();
+        int[] mergedArray1 = IntStream.concat(IntStream.of(arr1), IntStream.of(arr2)).distinct().sorted().toArray();
         System.out.println(" Using IntStream:: Merged and Sorted Array: " + Arrays.toString(mergedArray));
+        System.out.println(" Using IntStream:: Merged and Sorted Int stream Array: " + Arrays.toString(mergedArray1));
 
         List<Integer> mergedArrayToList = IntStream.concat(Arrays.stream(arr1), Arrays.stream(arr2)).distinct().sorted().boxed().toList();
         System.out.println(" Using IntStream:: Merged and Sorted Array to List: " + mergedArrayToList);
@@ -158,7 +163,7 @@ public class IntergersTest {
      * Find the largest values in an array and a List
      * <p>
      * Using IntStream::sorted, skip and limit methods
-     */
+      */
     public static void findLargestValues() {
         int[] arr = {9, 10, 50, 60, 70, 80, 90, 1001, 2, 2, 3, 4, 5, 6, 7, 8,};
 
@@ -169,7 +174,7 @@ public class IntergersTest {
         System.out.println("Largest 4 values in the array: " + Arrays.toString(largest4Values));
 
         // Find the largest 4 values in the array and convert to List using skip
-        List<Integer> largest4ValuesList = IntStream.of(arr).distinct().sorted().skip(arr.length - 5).boxed().toList();
+        List<Integer> largest4ValuesList = IntStream.of(arr).distinct().sorted().skip(arr.length - 4).boxed().toList();
         System.out.println("Largest 4 values in the array as List: " + largest4ValuesList);
 
         //convert the largest 4 values to List of integers to int[]
@@ -205,8 +210,11 @@ public class IntergersTest {
      */
     public static void printReverseOfArray() {
         int[] reverseArray = IntStream.rangeClosed(1, nums.length).map(i -> nums[nums.length - i]).toArray();
+        List<Integer> reverseArrList = IntStream.rangeClosed(1,nums.length).map(i->nums[nums.length-i]).boxed().toList();
+
         System.out.println("Original Array: " + Arrays.toString(nums));
         System.out.println("Reverse of Array: " + Arrays.toString(reverseArray));
+        System.out.println("Reverse of Array using IntStream as List: " + reverseArrList);
     }
 
     /**
