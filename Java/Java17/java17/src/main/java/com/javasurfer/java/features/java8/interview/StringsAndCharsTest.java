@@ -24,35 +24,9 @@ public class StringsAndCharsTest {
         //firstRepeatedChar();
         //findSecondLargestDigitInAString();
         //incrementByOneForArray();
-        reArrangeArrayInEvenFirstAndOddLast();
     }
 
-    public static void reArrangeArrayInEvenFirstAndOddLast(){
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        System.out.println("Original Array: " + Arrays.toString(arr));
-        int[] rearrangedArr = Arrays.stream(arr).boxed().sorted(Comparator.comparingInt(i -> i % 2 == 0 ? 0 : 1)).mapToInt(Integer::intValue).toArray();
-        System.out.println("Rearranged Array (Even First, Odd Last): " + Arrays.toString(rearrangedArr));
 
-        //Alternative method using Streams
-        int[] reArrangedArr=IntStream.concat(IntStream.of(arr).filter(i -> i % 2 ==0),IntStream.of(arr).filter(i -> i % 2 !=0)).toArray();
-        System.out.println("Rearranged Array (Even First, Odd Last) using alternative method: " + Arrays.toString(reArrangedArr));
-    }
-    /**
-     * Increment the value of an array by one
-     * This method converts the array to a string, increments it, and converts it back to an array.
-     */
-    public static void incrementByOneForArray(){
-        int[] arr = {4,9,9};
-
-        String arrStr = Arrays.stream(arr).mapToObj(String::valueOf).collect(Collectors.joining());
-        System.out.println("Array as String: " + arrStr);
-
-        Integer incrementedValue = Integer.parseInt(arrStr) + 1;
-        System.out.println("Incremented Value: " + incrementedValue);
-
-        int[] imcrementedResultArray = String.valueOf(incrementedValue).chars().map(Character::getNumericValue).toArray();
-        System.out.println("Incremented Result Array: " + Arrays.toString(imcrementedResultArray));
-    }
 
     /**
      * Find the second largest digit in a string
