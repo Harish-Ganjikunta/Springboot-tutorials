@@ -13,6 +13,8 @@ public class QvantelInterview {
         a.m2();
         System.out.println(a.i);
         System.out.println(a.j);
+
+        printPairsOfTwoIntegerLists();
     }
 
     /**
@@ -36,7 +38,7 @@ public class QvantelInterview {
      * Print pairs of two integer lists
      * <p>
      * Using flatMap and map methods
-     * O/P [[1, 3], [1, 4], [2, 3], [2, 4]]
+     * O/P [[1, 4], [1, 5], [2, 4], [2, 5], [3, 4], [3, 5]]
      */
     public static void printPairsOfTwoIntegerLists() {
         List<Integer> list1 = List.of(1, 2, 3);
@@ -46,7 +48,7 @@ public class QvantelInterview {
                 .flatMap(i -> list2.stream().map(j -> List.of(i, j)))
                 .toList();
 
-        System.out.println(pairs); // Output: [[1, 3], [1, 4], [2, 3], [2, 4]]
+        System.out.println(pairs); // Output: [[1, 4], [1, 5], [2, 4], [2, 5], [3, 4], [3, 5]]
     }
 
     class A {

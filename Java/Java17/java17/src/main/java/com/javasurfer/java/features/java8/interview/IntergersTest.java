@@ -11,25 +11,52 @@ public class IntergersTest {
 
 
     public static void main(String[] args) {
-        //findEvenNumbers();
-        //findFrequencyOfIntegers();
-        //mergeArrays();
-        //findSmallestValues();
-        // findLargestValues();
-        //findFistNonRepeatedValue();
-        //printReverseOfArray();
-        //removeDuplicatesFromListOfList();
-        //findMinAndMaxNumInList();
+        findEvenNumbers();
+        findFrequencyOfIntegers();
+        mergeArrays();
+        findSmallestValues();
+         findLargestValues();
+        findFistNonRepeatedValue();
+        printReverseOfArray();
+        removeDuplicatesFromListOfList();
+        findMinAndMaxNumInList();
         printPairsOfIntegers();
-        //printPairsOfTwoIntegerLists();
+        printPairsOfTwoIntegerLists();
+        incrementByOneForArray();
+        multiplyEachValueOfListWithAnotherListValue();
+        reArrangeArrayInEvenFirstAndOddLast();
+    }
+
+    /**
+     * Multiply each value of a list with another list value
+     * <p>
+     * Using flatMap and map methods
+     * O/P [4, 5, 8, 10, 12, 15]
+     */
+    public static  void multiplyEachValueOfListWithAnotherListValue(){
+        List<Integer> list1 = List.of(1, 2, 3);
+        List<Integer> list2 = List.of(4, 5);
+        List<Integer> list= list1.stream().flatMap(i-> list2.stream().map(j -> i*j)).toList();
+        System.out.println("Multiplied List: " + list);
     }
 
 
+    /**
+     * Rearrange an array in such a way that even numbers appear first and odd numbers appear last
+     * <p>
+     * Using sorted method with custom comparator
+     */
     public static void reArrangeArrayInEvenFirstAndOddLast(){
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         System.out.println("Original Array: " + Arrays.toString(arr));
         int[] rearrangedArr = Arrays.stream(arr).boxed().sorted(Comparator.comparingInt(i -> i % 2 == 0 ? 0 : 1)).mapToInt(Integer::intValue).toArray();
+        List<Integer> rearrangedList = Arrays.stream(arr).boxed().sorted(Comparator.comparingInt(i -> i % 2 == 0 ? 0 : 1)).toList();
         System.out.println("Rearranged Array (Even First, Odd Last): " + Arrays.toString(rearrangedArr));
+        System.out.println("Rearranged List (Even First, Odd Last): " + rearrangedList);
+
+        List<Integer> rearranged = list.stream().sorted(Comparator.comparingInt(i -> i%2 ==0 ? 0:1)).toList();
+        System.out.println("Rearranged List (Even First, Odd Last) from List: " + rearranged);
 
         //Alternative method using Streams
         int[] reArrangedArr=IntStream.concat(IntStream.of(arr).filter(i -> i % 2 ==0),IntStream.of(arr).filter(i -> i % 2 !=0)).toArray();
@@ -48,8 +75,19 @@ public class IntergersTest {
         Integer incrementedValue = Integer.parseInt(arrStr) + 1;
         System.out.println("Incremented Value: " + incrementedValue);
 
-        int[] imcrementedResultArray = String.valueOf(incrementedValue).chars().map(Character::getNumericValue).toArray();
-        System.out.println("Incremented Result Array: " + Arrays.toString(imcrementedResultArray));
+        int[] incrementedResultArray = String.valueOf(incrementedValue).chars().map(Character::getNumericValue).toArray();
+        System.out.println("Incremented Result Array: " + Arrays.toString(incrementedResultArray));
+
+        int[] incrementedResultArray1 = String.valueOf(Integer.parseInt(arrStr)+1).chars().map(Character::getNumericValue).toArray();
+        System.out.println("Incremented Result Array1: " + Arrays.toString(incrementedResultArray1));
+
+        //Alternative method without converting to String
+        int[] incrementedResultArray2 = String.valueOf(Integer.parseInt(Arrays.stream(arr).mapToObj(String::valueOf).collect(Collectors.joining())) + 1)
+                .chars().map(Character::getNumericValue).toArray();
+        System.out.println("Incremented Result Array2: " + Arrays.toString(incrementedResultArray2));
+
+        List<Integer> incrementedLis = String.valueOf(Integer.parseInt(Arrays.stream(arr).mapToObj(String::valueOf).collect(Collectors.joining()))+1).chars().map(Character::getNumericValue).boxed().toList();
+        System.out.println("Incremented Result List: " + incrementedLis);
     }
     /**
      * Remove duplicates from a List of Lists

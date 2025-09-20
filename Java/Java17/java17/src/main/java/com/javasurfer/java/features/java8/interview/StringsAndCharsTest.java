@@ -18,12 +18,11 @@ public class StringsAndCharsTest {
         //findFrequencyOfElementsOrWords();
         //findFirstNonRepeatingCharacter();
         //highestRepeatedWords();
-        //reverseStringUsingStreams();
+        reverseStringUsingStreams();
         //sortTheWordsBasedOnLength();
         //printOccurenceOfCharsUsingSet();
         //firstRepeatedChar();
         //findSecondLargestDigitInAString();
-        //incrementByOneForArray();
     }
 
 
@@ -31,6 +30,8 @@ public class StringsAndCharsTest {
     /**
      * Find the second largest digit in a string
      * This method uses Streams to filter digits, sort them, and find the second largest.
+     * Input String: abc12345def67890ghij
+     * Output: Second Largest Digit in the String: 8
      */
     public static void findSecondLargestDigitInAString(){
         String value = "abc12345def67890ghij";
@@ -44,6 +45,8 @@ public class StringsAndCharsTest {
     /**
      * Print the occurrence of characters in a string using Set
      * This method collects characters into a Map with their counts.
+     *
+     * ouput:  Occurrence of Characters using Set: {Banana=1, Plum=1, Orange=1, DragonFruit=1, Apple=1, Mango=1, Kiwi=1}
      */
     public static void printOccurenceOfCharsUsingSet(){
        Map<String,Long> occurenceOfChars = set.stream()
@@ -55,19 +58,24 @@ public class StringsAndCharsTest {
     /**
      * Sort the words based on their length in ascending and descending order
      * This method demonstrates sorting using Streams with different criteria.
+     *
      */
     public static void sortTheWordsBasedOnLength() {
+        //Output: Sorted  Words in ASC Based on Length: [Kiwi, Plum, Kiwi, Apple, Apple, Mango, Banana, Banana, Orange, DragonFruit]
         List<String> sortedWordsInAsc = words.stream().sorted(Comparator.comparing(String::length)).toList();
         System.out.println("Sorted  Words in ASC Based on Length: " + sortedWordsInAsc);
 
+        //Sorted  Words in DESC Based on Length: [DragonFruit, Banana, Banana, Orange, Apple, Apple, Mango, Kiwi, Plum, Kiwi]
         List<String> sortedWordsInDesc = words.stream().sorted(Comparator.comparing(String::length).reversed()).toList();
         System.out.println("Sorted  Words in DESC Based on Length: " + sortedWordsInDesc);
 
+        //output: Sorted  Words in ASC Based on Length and Alphabetically: [Kiwi, Kiwi, Plum, Apple, Apple, Mango, Banana, Banana, Orange, DragonFruit]
         List<String> sortedWordsInAscByLengthAndAlphabetically = words.stream()
                 .sorted(Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()))
                 .toList();
         System.out.println("Sorted  Words in ASC Based on Length and Alphabetically: " + sortedWordsInAscByLengthAndAlphabetically);
 
+        //output: Sorted  Words in DESC Based on Length and Alphabetically: [DragonFruit, Banana, Banana, Orange, Apple, Apple, Mango, Kiwi, Kiwi, Plum]
         List<String> sortedWordsInDescByLengthAndAlphabetically = words.stream().sorted(Comparator.comparing(String::length).reversed().thenComparing(Comparator.naturalOrder())).toList();
         System.out.println("Sorted  Words in DESC Based on Length and Alphabetically: " + sortedWordsInDescByLengthAndAlphabetically);
     }
@@ -76,12 +84,7 @@ public class StringsAndCharsTest {
      * This method demonstrates two ways to remove duplicates using Streams.
      */
     public static void removeDuplicates() {
-       // List<String> words = List.of("Apple", "Banana", "Apple", "Mango", "Banana", "Orange", "Kiwi", "Plum", "DragonFruit", "Kiwi");
 
-        /** Remove duplicates from the list of words
-         *
-         * Using distinct method
-         */
         List<String> unique = words.stream().distinct().collect((Collectors.toList()));
         System.out.println("Unique Words Using distinct method: " + unique);
 
@@ -132,7 +135,7 @@ public class StringsAndCharsTest {
         /** Frequency Of words in a List
          *
          * Using Collectors.groupingBy
-         */
+      ]   */
         Map<String,Long> frequencies = words.stream().collect(Collectors.groupingBy((Function.identity()),Collectors.counting()));
         System.out.println("Frequency of Words: " + frequencies);
 
@@ -204,18 +207,53 @@ public class StringsAndCharsTest {
      */
     public static void reverseStringUsingStreams() {
         String str = "Hello How are you doing today";
-        String reversed = str.chars().mapToObj(c -> (char) c)
+
+        // Reverse the entire string using IntStream
+        String reversed = IntStream.range(0, str.length())
+                .mapToObj(i -> str.charAt(str.length() - 1 - i))
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+        System.out.println("Reversed String using IntStream: " + reversed);
+
+        String reversed1 = str.chars().mapToObj(c -> (char) c)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
                     Collections.reverse(list);
                     return list.stream().map(String::valueOf).collect(Collectors.joining());
                 }));
-        System.out.println("Reversed Words in String: " + reversed);
+        System.out.println("Reversed Words in String: " + reversed1);
 
         String reversedWords = Arrays.stream(str.split(" "))
                 .map(word -> new StringBuilder(word).reverse().toString())
                 .collect(Collectors.joining(" "));
         System.out.println("Reveserd Words in Str method1: "+reversedWords);
 
+
+        String reversedWords1 = Arrays.stream(str.split(" "))
+                .map(word -> {
+                    char[] chars = word.toCharArray();
+                    for (int i = 0, j = chars.length - 1; i < j; i++, j--) {
+                        char temp = chars[i];
+                        chars[i] = chars[j];
+                        chars[j] = temp;
+                    }
+                    return new String(chars);
+                })
+                .collect(Collectors.joining(" "));
+        System.out.println(reversedWords1); // Output: olleH woH era uoy gniod yadot
+
+        String reversedWords2 = Arrays.stream(str.split(" "))
+                .map(word -> {
+                    int len = word.length();
+                    char[] chars = word.toCharArray();
+                    for (int i = 0; i < len / 2; i++) {
+                        char temp = chars[i];
+                        chars[i] = chars[len - 1 - i];
+                        chars[len - 1 - i] = temp;
+                    }
+                    return new String(chars);
+                })
+                .collect(Collectors.joining(" "));
+        System.out.println(reversedWords2); // Output: olleH woH era uoy gniod yadot
     }
 
 }

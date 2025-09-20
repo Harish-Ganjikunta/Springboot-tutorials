@@ -8,11 +8,13 @@ import java.util.stream.Collectors;
 public class DeliotteInterviewQuest {
 
     public static void main(String[] args) {
-        //stringTest();
+        stringTest();
         System.out.println("Value from getValue: " + new DeliotteInterviewQuest().getValue());
-        /*Parent p = new DeliotteInterviewQuest().new Child();
+        Parent p = new DeliotteInterviewQuest().new Child();
         p.print();
-        System.out.println("Value from Parent: " + p.value);*/
+        System.out.println("Value from Parent: " + p.value);
+
+        getEmployeeNamesAsSetWithKeyAsFirstLetter();
     }
     private static List<Employee> employees;
 
@@ -72,7 +74,7 @@ public class DeliotteInterviewQuest {
             i=i+2;
         } finally {
             i=i+3;
-            //return i;
+            //return i;  //if no return in try block then this return will be executed
         }
         return i;
 

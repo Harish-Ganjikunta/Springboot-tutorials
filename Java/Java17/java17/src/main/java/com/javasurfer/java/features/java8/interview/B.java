@@ -15,7 +15,7 @@ public class B extends A {
 
     public static void main(String[] args) {
         A a = new B();
-        //B b = new A();
+        //B b = new A(); // Compile time error
 
         a.m1();
         a.m2();

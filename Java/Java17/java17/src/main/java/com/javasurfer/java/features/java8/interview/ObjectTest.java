@@ -44,7 +44,11 @@ public class ObjectTest {
         System.out.println("ObjectTest is running.");
         //getStudentsEmails();
         //getStudentsEmailsInAString();
-        getEmployeeNamesAsSetWithKeyAsFirstLetter();
+        //getEmployeeNamesAsSetWithKeyAsFirstLetter();
+        String value = "Harish".toLowerCase();
+
+        Exception ex = new RuntimeException("test exception");
+        Object[] exceps= ex.getStackTrace();
     }
 
     public static void getStudentsEmails() {
