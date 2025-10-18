@@ -11,7 +11,7 @@ public class IntergersTest {
 
 
     public static void main(String[] args) {
-        findEvenNumbers();
+       /* findEvenNumbers();
         findFrequencyOfIntegers();
         mergeArrays();
         findSmallestValues();
@@ -24,7 +24,26 @@ public class IntergersTest {
         printPairsOfTwoIntegerLists();
         incrementByOneForArray();
         multiplyEachValueOfListWithAnotherListValue();
-        reArrangeArrayInEvenFirstAndOddLast();
+        reArrangeArrayInEvenFirstAndOddLast();*/
+        findMissingValueFromArray();
+    }
+
+    public static void findMinUsingJava7() {
+
+    }
+
+    public static void findMissingValueFromArray() {
+        int[] arr = {1, 2, 3, 5, 6, 7, 8, 9, 10};
+        int n = 10; // Assuming the array should contain numbers from 1 to 10
+        int expectedSum = n * (n + 1) / 2;
+        int actualSum = Arrays.stream(arr).sum();
+        int missingValue = expectedSum - actualSum;
+        System.out.println("Missing Value: " + missingValue);
+
+        int sum = Arrays.stream(arr).boxed().reduce(Integer::sum).get();
+        int missing = sum/arr.length-1;
+        System.out.println(missing);
+
     }
 
     /**
@@ -265,6 +284,9 @@ public class IntergersTest {
 
         List<Integer> mergedArrayToList = IntStream.concat(Arrays.stream(arr1), Arrays.stream(arr2)).distinct().sorted().boxed().toList();
         System.out.println(" Using IntStream:: Merged and Sorted Array to List: " + mergedArrayToList);
+
+      // int[] merged =  Arrays.stream(arr1).boxed().flatMap(Arrays.stream(arr2).boxed()).mapToInt(Integer::intValue).toArray();
+        //System.out.println("Merged Array using flatMap: " + Arrays.toString(merged));
     }
 
     /**
