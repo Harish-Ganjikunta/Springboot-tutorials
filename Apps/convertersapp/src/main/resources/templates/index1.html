@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        form { margin-bottom: 2rem; }
+        img { max-width: 100%; border: 1px solid #ccc; margin-top: 1rem; }
+        .message { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h1>Image Converter App</h1>
+
+<div th:if="${message}" class="message">
+    <p th:text="${message}"></p>
+</div>
+<div th:if="${error}" class="error">
+    <p th:text="${error}"></p>
+</div>
+
+<form method="POST" action="/convert" enctype="multipart/form-data">
+    <div>
+        <label for="file">Choose an image:</label>
+        <input type="file" name="file" id="file" required>
+    </div>
+    <div style="margin-top: 1rem;">
+        <label for="format">Convert to:</label>
+        <select name="format" id="format">
+            <option value="PNG">PNG</option>
+            <option value="JPEG">JPEG</option>
+            <option value="GIF">GIF</option>
+        </select>
+    </div>
+    <div style="margin-top: 1rem;">
+        <button type="submit">Convert</button>
+    </div>
+</form>
+
+<div th:if="${base64Image}">
+    <h2>Converted Image</h2>
+    <p th:text="'Format: ' + ${convertedFormat}"></p>
+    <img th:src="'data:image/' + ${convertedFormat.toLowerCase()} + ';base64,' + ${base64Image}" alt="Converted Image">
+    <div>
+        <a th:href="'data:image/' + ${convertedFormat.toLowerCase()} + ';base64,' + ${base64Image}" th:download="'converted_image.' + ${convertedFormat.toLowerCase()}">Download</a>
+    </div>
+</div>
+</body>
+</html>

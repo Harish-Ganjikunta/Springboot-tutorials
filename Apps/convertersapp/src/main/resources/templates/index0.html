@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Converter</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+        .card {
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(60,72,88,0.12);
+        }
+        .preview img, .converted-section img {
+            max-width: 220px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(60,72,88,0.10);
+            margin-top: 0.5rem;
+        }
+        .download-link {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h2 class="text-center text-primary mb-4">Image Converter App</h2>
+                <div id="message" class="alert alert-info d-none"></div>
+                <div id="error" class="alert alert-danger d-none"></div>
+                <form id="convertForm" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Choose an image:</label>
+                        <input type="file" class="form-control" name="file" id="file" required accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <label for="format" class="form-label">Convert to:</label>
+                        <select class="form-select" name="format" id="format">
+                            <option value="PNG">PNG</option>
+                            <option value="JPEG">JPEG</option>
+                            <option value="GIF">GIF</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Convert</button>
+                    <div class="preview text-center mt-3" id="preview"></div>
+                </form>
+                <div id="convertedSection" class="converted-section text-center mt-4 d-none">
+                    <h4>Converted Image</h4>
+                    <p id="convertedFormat"></p>
+                    <img id="convertedImg" src="" alt="Converted Image">
+                    <div>
+                        <a id="downloadLink" href="#" download class="btn btn-success download-link">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Preview selected image
+    document.getElementById('file').addEventListener('change', function(event) {
+        const preview = document.getElementById('preview');
+        preview.innerHTML = '';
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Preview';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // AJAX form submit
+    document.getElementById('convertForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Hide previous messages and result
+        document.getElementById('message').classList.add('d-none');
+        document.getElementById('error').classList.add('d-none');
+        document.getElementById('convertedSection').classList.add('d-none');
+
+         fetch('/convert', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }
+        }).then(response => response.text())
+          .then(text => {
+              const data = JSON.parse(text);
+              if (data.error) {
+                  showError(data.error);
+              } else {
+                  showConvertedImage(data.base64Image, data.convertedFormat);
+                  showMessage(data.message || 'Conversion successful!');
+              }
+          })
+          .catch(() => {
+              showError('Conversion failed. Please try again.');
+          });
+
+        <!--fetch('/convert', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                showError(data.error);
+            } else {
+                showConvertedImage(data.base64Image, data.convertedFormat);
+                showMessage(data.message || 'Conversion successful!');
+            }
+        })
+        .catch(() => {
+            showError('Conversion failed. Please try again.');
+        });
+    });-->
+
+    function showMessage(msg) {
+        const el = document.getElementById('message');
+        el.textContent = msg;
+        el.classList.remove('d-none');
+    }
+    function showError(msg) {
+        const el = document.getElementById('error');
+        el.textContent = msg;
+        el.classList.remove('d-none');
+    }
+    function showConvertedImage(base64, format) {
+        document.getElementById('convertedSection').classList.remove('d-none');
+        document.getElementById('convertedFormat').textContent = 'Format: ' + format;
+        const imgSrc = 'data:image/' + format.toLowerCase() + ';base64,' + base64;
+        document.getElementById('convertedImg').src = imgSrc;
+        document.getElementById('downloadLink').href = imgSrc;
+        document.getElementById('downloadLink').download = 'converted_image.' + format.toLowerCase();
+    }
+</script>
+</body>
+</html>

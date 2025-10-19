@@ -1,0 +1,129 @@
+<!-- src/main/resources/templates/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home | Converter App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem 1rem;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+        .hero-desc {
+            color: #374151;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+        .converter-card {
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(60,72,88,0.12);
+            background: #fff;
+            padding: 2rem 2.5rem;
+        }
+        .preview img, .converted-section img {
+            max-width: 220px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(60,72,88,0.10);
+            margin-top: 0.5rem;
+        }
+        .download-link {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-title">Converter App</div>
+        <div class="hero-desc">
+            Convert images to PNG, JPEG, GIF, or extract text in your preferred language.<br>
+            Fast, secure, and easy to use.
+        </div>
+    </div>
+    <div class="converter-card">
+        <h3 class="text-center text-primary mb-3">Try the Converter</h3>
+        <div th:if="${message}" class="alert alert-info" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <form method="POST" action="/convert" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="file" class="form-label">Choose an image:</label>
+                <input type="file" class="form-control" name="file" id="file" required accept="image/*" onchange="previewImage(event)" onclick="this.value=null">
+            </div>
+            <div class="mb-3">
+                <label for="format" class="form-label">Convert to:</label>
+                <select class="form-select" name="format" id="format">
+                    <option value="PNG">PNG</option>
+                    <option value="JPEG">JPEG</option>
+                    <option value="GIF">GIF</option>
+                    <option value="TEXT">TEXT</option>
+                </select>
+            </div>
+            <div class="mb-3" id="languageContainer" style="display:none;">
+                <label for="language" class="form-label">Language:</label>
+                <select class="form-select" name="language" id="language">
+                    <option value="">Select language</option>
+                    <option value="EN">English</option>
+                    <option value="FR">French</option>
+                    <option value="ES">Spanish</option>
+                    <!-- Add more languages as needed -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Convert</button>
+            <div class="preview text-center mt-3" id="preview"></div>
+        </form>
+        <div th:if="${base64Image}" class="converted-section text-center mt-4">
+            <h4>Converted Result</h4>
+            <p th:text="'Format: ' + ${convertedFormat}"></p>
+            <div th:if="${convertedFormat == 'TEXT'}">
+                <pre style="white-space: pre-wrap; text-align: left; background: #f8fafc; padding: 1rem; border-radius: 8px; max-height: 360px; overflow: auto;" th:text="${base64Image}">Converted text will appear here</pre>
+                <a th:href="'data:text/plain;charset=utf-8,' + ${#strings.replace(base64Image, '\n', '%0A')}" th:download="'converted.txt'" class="btn btn-success download-link">Download</a>
+            </div>
+            <div th:if="${convertedFormat != 'TEXT'}">
+                <img th:src="'data:image/' + ${convertedFormat.toLowerCase()} + ';base64,' + ${base64Image}" alt="Converted Image">
+                <div>
+                    <a th:href="'data:image/' + ${convertedFormat.toLowerCase()} + ';base64,' + ${base64Image}" th:download="'converted_image.' + ${convertedFormat.toLowerCase()}" class="btn btn-success download-link">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function previewImage(event) {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Preview';
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        document.getElementById('format').addEventListener('change', function() {
+            const languageContainer = document.getElementById('languageContainer');
+            if (this.value === 'TEXT') {
+                languageContainer.style.display = 'block';
+            } else {
+                languageContainer.style.display = 'none';
+                document.getElementById('language').value = '';
+            }
+        });
+    </script>
+</body>
+</html>

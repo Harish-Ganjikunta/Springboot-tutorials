@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - Cards Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+
+        .card {
+            height: 100px;
+            width: 100px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-top {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+            margin: 10px auto 0 auto;
+            border-radius: 20%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to the Homepage</h1>
+    <div class="row g-1">
+
+        <div class="col-md-2">
+            <div class="card" th:onclick="'window.location.href=\'/home/'"> <!--th:onclick="'window.location.href=\'/image/'">-->
+                <img src="../static/images/image.jpg" th:src="@{/images/image.jpg}" class="card-img-top" alt="Card image">
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card" ><!--th:onclick="'window.location.href=\'/image/'">-->
+                <img th:src="@{/resources/images/image.jpg}" class="card-img-top" alt="Card image">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card" ><!--th:onclick="'window.location.href=\'/image/'">-->
+                <img th:src="@{/resources/images/image.jpg}" class="card-img-top" alt="Card image">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
