@@ -16,6 +16,14 @@ import java.util.Objects;
 @Slf4j
 public class ConverterUtils {
 
+    public String extractFileName(MultipartFile multipartFile) {
+        String originalFileName = multipartFile.getOriginalFilename();
+        if (originalFileName != null && originalFileName.contains(".")) {
+            return originalFileName.substring(0, originalFileName.lastIndexOf('.'));
+        }
+        return "";
+    }
+
     public File convertMultiPartToFile(MultipartFile multipartFile) {
         File convertedFile = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
@@ -64,4 +72,5 @@ public class ConverterUtils {
             default -> MediaType.APPLICATION_OCTET_STREAM;
         };
     }
+
 }
