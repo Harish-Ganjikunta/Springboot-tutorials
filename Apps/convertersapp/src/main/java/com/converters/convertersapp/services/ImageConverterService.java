@@ -64,26 +64,16 @@ public class ImageConverterService {
 
     public ByteArrayOutputStream convertImageTextToPDF(MultipartFile imageFile){
         log.info("Entered into the convertImageToPDF method...{}",imageFile.getOriginalFilename());
-        /*StringBuilder fileName = new StringBuilder(Objects.requireNonNull(imageFile.getOriginalFilename()));
-        fileName.append(".").append(FormatsEnum.PDF.getFormat());*/
         Document document = new Document();
         PdfWriter pdfWriter = null;
                 String imageData =  convertImageToText(imageFile);
-        try(ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-           // FileOutputStream fos = new FileOutputStream(fileName.toString())
-        ){
+        try(ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()){
             pdfWriter = PdfWriter.getInstance(document,byteArrayOutputStream);
             pdfWriter.open();
             document.open();
-            //Element ele =  new
             document.add(new Paragraph(imageData));
-            /*HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.set(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+converterUtils.extractFileName(imageFile)+".pdf");
-            headers.setContentLength(byteArrayOutputStream.size());*/
+
             return  byteArrayOutputStream;
-            /*document.close();
-            pdfWriter.close();*/
         } catch (IOException | DocumentException e) {
             throw new RuntimeException(e);
         }finally {

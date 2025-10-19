@@ -36,7 +36,6 @@ public class ImageToTextService {
             URL imgUrl = imageFile.toURI().toURL();
             result = ocr.recognize(new URL[]{imgUrl}, Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
             ocr.stopEngine();
-            //System.out.println("Result:" + result);
         } catch (IOException e) {
             throw new RuntimeException(e);
 
