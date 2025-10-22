@@ -18,7 +18,7 @@ import java.io.ByteArrayOutputStream;
 
 @RestController
 @Slf4j
-@RequestMapping("/api")
+@RequestMapping("/api/image")
 public class ImageConverterController {
 
     @Autowired
