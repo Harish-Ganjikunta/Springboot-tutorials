@@ -25,7 +25,7 @@ public class ProducerScheduler {
         idList.add(0);
 
     }*/
-    @Scheduled(fixedRate = 10000, initialDelay = 10000)
+    @Scheduled(fixedRate = 5000, initialDelay = 5000)
     //@Scheduled(cron = "0 0 12 * * ?") // Executes at 12:00 PM every day
     public void scheduleProducerTask() {
         log.info("Scheduled producer task executed");

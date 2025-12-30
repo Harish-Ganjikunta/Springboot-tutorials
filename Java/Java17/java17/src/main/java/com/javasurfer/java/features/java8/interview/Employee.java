@@ -9,14 +9,16 @@ public class Employee {
     private String name;
     private int age;
     private String department;
+    private  double salary;
 
-    public Employee(int id, String email, String phoneNumber, String name, int age, String department) {
+    public Employee(int id, String email, String phoneNumber, String name, int age, String department, double salary) {
         this.id = id;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.age = age;
         this.department = department;
+        this.salary = salary;
     }
 
     public int getId() {
@@ -67,6 +69,14 @@ public class Employee {
         this.department = department;
     }
 
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -76,6 +86,7 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", department='" + department + '\'' +
+                ", salary=" + salary +
                 '}';
     }
 }

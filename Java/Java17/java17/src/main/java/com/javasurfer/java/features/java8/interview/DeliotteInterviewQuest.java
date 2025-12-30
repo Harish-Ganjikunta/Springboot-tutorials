@@ -20,10 +20,10 @@ public class DeliotteInterviewQuest {
 
     static {
                 employees = List.of(
-                new Employee(1,"Alice@gmail.com", "745757","Alice", 30, "HR"),
-                new Employee(2, "Bob@gmail.com", "745757","Bob", 28, "Finance"),
-                new Employee(3, "Anna@gmail.com", "745757","Anna", 25, "IT"),
-                new Employee(4, "Brian@gmail.com", "745757","Brian", 35, "Marketing")
+                new Employee(1,"Alice@gmail.com", "745757","Alice", 30, "HR",60000.0),
+                new Employee(2, "Bob@gmail.com", "745757","Bob", 28, "Finance",50000.0),
+                new Employee(3, "Anna@gmail.com", "745757","Anna", 25, "IT",1000000.0),
+                new Employee(4, "Brian@gmail.com", "745757","Brian", 35, "Marketing",30000.0)
         );
 
     }

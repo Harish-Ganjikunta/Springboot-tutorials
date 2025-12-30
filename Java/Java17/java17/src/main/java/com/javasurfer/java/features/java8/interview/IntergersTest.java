@@ -11,7 +11,7 @@ public class IntergersTest {
 
 
     public static void main(String[] args) {
-       /* findEvenNumbers();
+        findEvenNumbers();
         findFrequencyOfIntegers();
         mergeArrays();
         findSmallestValues();
@@ -24,7 +24,7 @@ public class IntergersTest {
         printPairsOfTwoIntegerLists();
         incrementByOneForArray();
         multiplyEachValueOfListWithAnotherListValue();
-        reArrangeArrayInEvenFirstAndOddLast();*/
+        reArrangeArrayInEvenFirstAndOddLast();
         findMissingValueFromArray();
     }
 
@@ -34,15 +34,22 @@ public class IntergersTest {
 
     public static void findMissingValueFromArray() {
         int[] arr = {1, 2, 3, 5, 6, 7, 8, 9, 10};
+        //List<Integer> list = List.of(1, 2, 3, 5, 6, 7, 8, 9, 10);
         int n = 10; // Assuming the array should contain numbers from 1 to 10
         int expectedSum = n * (n + 1) / 2;
+        System.out.println("Expected Sum: " + expectedSum);
         int actualSum = Arrays.stream(arr).sum();
         int missingValue = expectedSum - actualSum;
         System.out.println("Missing Value: " + missingValue);
 
         int sum = Arrays.stream(arr).boxed().reduce(Integer::sum).get();
         int missing = sum/arr.length-1;
-        System.out.println(missing);
+        System.out.println("Missing Array Values:"+missing);
+
+         /*int liSum  = list.stream().reduce(Integer::sum).get();
+         int size = list.toArray().length-1;
+         int missingLisValue =  liSum/size;
+        System.out.println("Missing List Value: " + missingLisValue);*/
 
     }
 

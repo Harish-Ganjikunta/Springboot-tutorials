@@ -1,18 +1,16 @@
 package com.javasurfer.java.features.java8.interview;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ObjectTest {
 
 
-    private static List<Student> students;
+    private static final List<Student> students;
 
-    private static List<Department> departments;
+    private static final List<Department> departments;
 
-    private static  List<Employee> employees;
+    private static final List<Employee> employees;
 
     static {
         Student student = new Student(1, "Harish", "harish@gmail.com", "1234567890", "Computer Science");
@@ -32,19 +30,19 @@ public class ObjectTest {
         departments = List.of(department, department1, department2, department3, department4, department5);
 
         employees = List.of(
-                new Employee(1,"Alice@gmail.com", "745757","Alice", 30, "HR"),
-                new Employee(2, "Bob@gmail.com", "745757","Bob", 28, "Finance"),
-                new Employee(3, "Anna@gmail.com", "745757","Anna", 25, "IT"),
-                new Employee(4, "Brian@gmail.com", "745757","Brian", 35, "Marketing")
+                new Employee(1,"Alice@gmail.com", "745757","Alice", 30, "HR",25000.0),
+                new Employee(2, "Bob@gmail.com", "745757","Bob", 28, "Finance",50000.0),
+                new Employee(3, "Anna@gmail.com", "745757","Anna", 25, "IT",1000000.0),
+                new Employee(4, "Brian@gmail.com", "745757","Brian", 35, "Marketing",30000.0)
         );
-
     }
 
     public static void main(String[] args) {
         System.out.println("ObjectTest is running.");
         //getStudentsEmails();
         //getStudentsEmailsInAString();
-        //getEmployeeNamesAsSetWithKeyAsFirstLetter();
+        getEmployeeNamesAsSetWithKeyAsFirstLetter();
+        filterSortGroupEmployees();
         String value = "Harish".toLowerCase();
 
         Exception ex = new RuntimeException("test exception");
@@ -67,16 +65,35 @@ public class ObjectTest {
                         emp -> emp.getName().substring(0, 1).toUpperCase(),
                         Collectors.mapping(Employee::getName, Collectors.toSet())
                 ));
-
         System.out.println("Employee Names Set with Key as First Letter: " + employeeNamesSet);
-
         Map<Character, Set<String>> groupedNames = employees.stream()
                 .collect(Collectors.groupingBy(
                         e -> e.getName().charAt(0),
                         Collectors.mapping(Employee::getName, Collectors.toSet())
                 ));
         System.out.println("Grouped Employee Names by First Letter: " + groupedNames);
+    }
+    /**
+     * Filter employees with salary > 50,000.
+     * Sort them by salary (descending).
+     * Group them by department.
+     * Collect all employees in each department
+     */
 
+    public static void filterSortGroupEmployees(){
+       Map<String,List<Employee>> departmentEmployees =  employees.stream().filter(employee -> employee.getSalary()>50_000).sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).
+             collect(Collectors.groupingBy(Employee::getDepartment,Collectors.toList()));
+        System.out.println("Department Employees with salary > 50,000: " + departmentEmployees);
+       /* Map<String, List<Employee>> grouped = employees.stream()
+                .filter(e -> e.getSalary() > 50_000)
+                .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+                .collect(Collectors.groupingBy(
+                        Employee::getDepartment,
+                        LinkedHashMap::new,                      // preserve department insertion order
+                        Collectors.toList()                      // collect employees per department
+                ));
+
+        grouped.forEach((dept, emps) -> System.out.println(dept + " -> " + emps));*/
     }
 
 }
