@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class IntergersTest {
+public class IntegersTest {
     private static final List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 1, 1, 1, 4, 3, 3, 5, 7, 8);
     private static final int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 1, 1, 1, 4, 3, 3, 5, 7, 8};
 
@@ -32,19 +32,27 @@ public class IntergersTest {
 
     }
 
+    /**
+     * Find the missing value from an array
+     * <p>
+     * Using sum formula n(n+1)/2
+     *
+     * output: Expected Sum: 78
+     * Missing Value: 11
+     */
     public static void findMissingValueFromArray() {
-        int[] arr = {1, 2, 3, 5, 6, 7, 8, 9, 10};
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10,12};
         //List<Integer> list = List.of(1, 2, 3, 5, 6, 7, 8, 9, 10);
-        int n = 10; // Assuming the array should contain numbers from 1 to 10
+        int n = 12; // Assuming the array should contain numbers from 1 to 10
         int expectedSum = n * (n + 1) / 2;
         System.out.println("Expected Sum: " + expectedSum);
         int actualSum = Arrays.stream(arr).sum();
         int missingValue = expectedSum - actualSum;
         System.out.println("Missing Value: " + missingValue);
 
-        int sum = Arrays.stream(arr).boxed().reduce(Integer::sum).get();
+        /*int sum = Arrays.stream(arr).boxed().reduce(Integer::sum).get();
         int missing = sum/arr.length-1;
-        System.out.println("Missing Array Values:"+missing);
+        System.out.println("Missing Array Values:"+missing);*/
 
          /*int liSum  = list.stream().reduce(Integer::sum).get();
          int size = list.toArray().length-1;
@@ -71,6 +79,11 @@ public class IntergersTest {
      * Rearrange an array in such a way that even numbers appear first and odd numbers appear last
      * <p>
      * Using sorted method with custom comparator
+     * output : Original Array: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+     * Rearranged Array (Even First, Odd Last): [2, 4, 6, 8, 1, 3, 5, 7, 9]
+     * Rearranged List (Even First, Odd Last): [2, 4, 6, 8, 1, 3, 5, 7, 9]
+     * Rearranged List (Even First, Odd Last) from List: [2, 4, 6, 8, 1, 3, 5, 7, 9]
+     * Rearranged Array (Even First, Odd Last) using alternative method: [2, 4, 6, 8, 1, 3, 5, 7, 9]
      */
     public static void reArrangeArrayInEvenFirstAndOddLast(){
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -81,11 +94,11 @@ public class IntergersTest {
         System.out.println("Rearranged Array (Even First, Odd Last): " + Arrays.toString(rearrangedArr));
         System.out.println("Rearranged List (Even First, Odd Last): " + rearrangedList);
 
-        List<Integer> rearranged = list.stream().sorted(Comparator.comparingInt(i -> i%2 ==0 ? 0:1)).toList();
+        List<Integer> rearranged = list.stream().sorted(Comparator.comparingInt(i -> i % 2 == 0 ? 0 : 1)).toList();
         System.out.println("Rearranged List (Even First, Odd Last) from List: " + rearranged);
 
         //Alternative method using Streams
-        int[] reArrangedArr=IntStream.concat(IntStream.of(arr).filter(i -> i % 2 ==0),IntStream.of(arr).filter(i -> i % 2 !=0)).toArray();
+        int[] reArrangedArr=IntStream.concat(IntStream.of(arr).filter(i -> i % 2 == 0),IntStream.of(arr).filter(i -> i % 2 != 0)).toArray();
         System.out.println("Rearranged Array (Even First, Odd Last) using alternative method: " + Arrays.toString(reArrangedArr));
     }
     /**
