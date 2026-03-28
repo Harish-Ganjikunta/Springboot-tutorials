@@ -1,6 +1,7 @@
 package com.javasurfer.java.features.java8.interview;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ObjectTest {
@@ -61,7 +62,7 @@ public class ObjectTest {
 
     public static void getEmployeeNamesAsSetWithKeyAsFirstLetter(){
         var employeeNamesSet = employees.stream()
-                .collect(Collectors.groupingBy(
+                .collect(Collectors.groupingBy(//Function.identity(),
                         emp -> emp.getName().substring(0, 1).toUpperCase(),
                         Collectors.mapping(Employee::getName, Collectors.toSet())
                 ));

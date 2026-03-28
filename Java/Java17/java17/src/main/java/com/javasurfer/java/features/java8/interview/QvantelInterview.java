@@ -7,7 +7,7 @@ import java.util.List;
 public class QvantelInterview {
 
 
-    public static void main(String[] args) {
+    public static void  main(String[] args) {
         A a = new QvantelInterview().new B();
         a.m1();
         a.m2();
